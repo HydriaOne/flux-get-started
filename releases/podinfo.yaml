@@ -1,0 +1,22 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: podinfo-dev
+  namespace: dev
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: glob:dev-*
+spec:
+  releaseName: podinfo-dev
+  chart:
+    git: git@github.com:HydriaOne/flux-get-started
+    path: charts/podinfo
+    ref: master
+  values:
+    image:
+      repository: hydria/podinfo
+      tag: dev-1234XD
+    replicaCount: 1
+    hpa:
+      enabled: false
